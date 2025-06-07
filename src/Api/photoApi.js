@@ -7,12 +7,17 @@ export const photoAPI = createApi({
     //QUERY -> GET
     //MUTATION -> POST/PUT/DELETE
     getPhotos: builder.query({
-      query: () => ({
-        url : "PhotoGallery",
+      query: (userId) => ({
+        url : `PhotoGallery\\${userId}`,
         method : "GET",
         params : {}
       }),
-      transformResponse : (res) => res.sort((a,b) => b.id - a.id),
+      transformResponse : (res) => {
+        if(res.photos)
+           res.photos.sort((a,b) => b.id - a.id)
+        return res
+
+      },
       providesTags : ["Photos"]
     }),
     addPhotos: builder.mutation({
@@ -24,8 +29,8 @@ export const photoAPI = createApi({
       invalidatesTags : ["Photos"]
     }),
     updateLikeDislike: builder.mutation({
-      query: ({id,type}) => ({
-        url : `PhotoGallery\\${id}\\${type}`,
+      query: ({id,userId,type}) => ({
+        url : `PhotoGallery\\${id}\\${userId}\\${type}`,
         method : "PUT",
       }) ,
       invalidatesTags : ["Photos"]

@@ -11,7 +11,7 @@ function Login() {
     const[password,setPassword] = useState("")
     const[isValid,setIsValid] = useState(false)
     const navigate = useNavigate()
-    const[login] = useLoginUserMutation()
+    const[login,{ isSuccess, data, error }] = useLoginUserMutation()
     //const loogedInUser = useSelector((store) => store.userAuthStore)
     const dispatch = useDispatch();
     const handleSubmit = async (e) => {
@@ -32,10 +32,12 @@ function Login() {
           id : user.id,
           email : user.email
         }))
-      }
-      if(result.data.isSuccess)
-      {
         navigate("/")
+      }
+      if(result.error)
+      {
+         const errorMsg = result.error.data.errorMessages.join(",");
+         alert(errorMsg)
       }
     };
     useEffect(() => {
