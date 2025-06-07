@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAddPhotosMutation, useGetPhotosQuery, useUpdateLikeDislikeMutation } from './Api/photoApi'
+import withAuth from './HOC/withAuth';
 
 function Home() {
     const {data,isLoading} = useGetPhotosQuery()
@@ -74,4 +75,5 @@ function Home() {
   );
 }
 
-export default Home
+
+export default withAuth(Home)
