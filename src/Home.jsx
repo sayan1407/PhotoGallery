@@ -3,6 +3,7 @@ import { useAddPhotosMutation, useGetPhotosQuery, useUpdateLikeDislikeMutation }
 import withAuth from './HOC/withAuth';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 function Home() {
    
@@ -15,12 +16,26 @@ function Home() {
       navigate("/login")
     const { data, isLoading } = useGetPhotosQuery(loggedInUser.id);
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append("file",e.target.elements["image"].files[0]);
-        uploadPhoto(formData)
-    }
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("file", e.target.elements["image"].files[0]);
+      const result = await uploadPhoto(formData);
+      console.log(result)
+      if (result.data) {
+          if(result.data.isSuccess)
+          toast.success("Photo uploaded successfully");
+        else{
+           const errorMsg = result.error.data.errorMessages.join(",");
+           toast.error(errorMsg);
+        }
+        
+      }
+      if (result.error) {
+        const errorMsg = result.error.data.errorMessages.join(",");
+        toast.error(errorMsg);
+      }
+    };
     const handleUpdateLikeDislike = (id,type) => {
         updateLikeDislike({
            id :  id,
