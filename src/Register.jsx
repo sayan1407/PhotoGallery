@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRegisterUserMutation } from "./Api/AuthApi";
-
+import { useNavigate } from "react-router";
+import {ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 function Register() {
   const[error,setError] = useState("")
   const[password,setPassword] = useState("")
@@ -8,6 +10,7 @@ function Register() {
   const[name,setName] = useState("")
   const[isValid,setIsValid] = useState(false)
   const [register] = useRegisterUserMutation();
+  const navigate = useNavigate()
   useEffect(() => {
     if(password !== reenterPassword)
       setError("Re-enter password not matched")
@@ -23,11 +26,25 @@ function Register() {
   })
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {data,isSuccess} = await register({
+    const result = await register({
       userName : name,
       password : password
      })
-     console.log(data)
+     console.log(result)
+     if(result.data)
+     {
+       if(result.data.isSuccess)
+       {
+         toast.success("Registration successfull. Please login")
+
+         navigate("/login")
+       }
+     }
+     if(result.error)
+      {
+         const errorMsg = result.error.data.errorMessages.join(",");
+         alert(errorMsg)
+      }
   }
 
   return (
@@ -72,6 +89,7 @@ function Register() {
           <button type="submit" className="btn btn-success" disabled={!isValid}>
             Register
           </button>
+          
         </div>
       </form>
     </div>
