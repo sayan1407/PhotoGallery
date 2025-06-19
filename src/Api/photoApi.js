@@ -35,10 +35,36 @@ export const photoAPI = createApi({
       }) ,
       invalidatesTags : ["Photos"]
     }),
+    getComments: builder.query({
+      query: (photoId) => ({
+        url : `PhotoGallery\\comments\\${photoId}`,
+        method : "GET",
+      }) ,
+      transformResponse : (res) => {
+        if(res.result)
+        {
+             res.result.sort((a,b) => b.id - a.id)
+        }
+        return res;
+      },
+      providesTags : ["Comments"]
+    }),
+     addComments: builder.mutation({
+      query: ({photoId,userId,comment}) => ({
+        url : `PhotoGallery\\comments`,
+        method : "POST",
+        body:{
+          photoId,userId,comment
+        }
+      }) ,
+      invalidatesTags : ["Comments"]
+    }),
     
   }),
 });
 export const { useGetPhotosQuery,
     useAddPhotosMutation,
- useUpdateLikeDislikeMutation
+ useUpdateLikeDislikeMutation,
+ useGetCommentsQuery,
+ useAddCommentsMutation
  } = photoAPI;

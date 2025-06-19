@@ -55,7 +55,12 @@ function Home() {
         <div className="col-md-6 upload-section">
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className="d-flex gap-2">
-              <input type="file" className="form-control" id="image" name="image"/>
+              <input
+                type="file"
+                className="form-control"
+                id="image"
+                name="image"
+              />
               <button className="btn btn-primary" type="submit">
                 <i className="bi bi-upload"></i>Upload
               </button>
@@ -65,34 +70,69 @@ function Home() {
       </div>
 
       <div className="row g-4">
-        
-          {!isLoading && data.photos.map((value,index) => (
+        {!isLoading &&
+          data.photos.map((value, index) => (
             <div className="col-sm-6 col-md-4 col-lg-3" key={index}>
-            <div className="card h-100">
-              <img
-                src= {`images/${(value.fileName)}`}
-                className="card-img-top"
-                alt=""
-              />
-              <div className="card-body text-center">
-                <button className={`${data.likedPhotos.map((l) => l.id).includes(value.id) ? "btn btn-success me-2" : "btn btn-outline-success me-2"}`} onClick={() => handleUpdateLikeDislike(parseInt(value.id),"like")}>
-                  <i className={`bi ${data.likedPhotos.map((l) => l.id).includes(value.id) ? "bi bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up"} `}></i>
-                  <span className="badge bg-success ms-1">{value.like}</span>
+              <div className="card h-100">
+                <button className="btn me-2" onClick={() => navigate("/comments", {
+                  state : {
+                    image : value.fileName,
+                    photoId : value.id
+                  }
+                })}>
+                  <img
+                    src={`images/${value.fileName}`}
+                    className="card-img-top"
+                    alt=""
+                  />
                 </button>
-                <button className={`${data.disLikedPhotos.map((l) => l.id).includes(value.id) ? "btn btn-danger me-2" : "btn btn-outline-danger me-2"}`} onClick={() => handleUpdateLikeDislike(parseInt(value.id),"dislike")}>
-                  <i className={`bi ${data.disLikedPhotos.map((l) => l.id).includes(value.id) ? "bi bi-hand-thumbs-down-fill" : "bi-hand-thumbs-down"} `}></i>
-                  <span className="badge bg-danger ms-1">{value.dislike}</span>
-                </button>
+                <div className="card-body text-center">
+                  <button
+                    className={`${
+                      data.likedPhotos.map((l) => l.id).includes(value.id)
+                        ? "btn btn-success me-2"
+                        : "btn btn-outline-success me-2"
+                    }`}
+                    onClick={() =>
+                      handleUpdateLikeDislike(parseInt(value.id), "like")
+                    }
+                  >
+                    <i
+                      className={`bi ${
+                        data.likedPhotos.map((l) => l.id).includes(value.id)
+                          ? "bi bi-hand-thumbs-up-fill"
+                          : "bi-hand-thumbs-up"
+                      } `}
+                    ></i>
+                    <span className="badge bg-success ms-1">{value.like}</span>
+                  </button>
+                  <button
+                    className={`${
+                      data.disLikedPhotos.map((l) => l.id).includes(value.id)
+                        ? "btn btn-danger me-2"
+                        : "btn btn-outline-danger me-2"
+                    }`}
+                    onClick={() =>
+                      handleUpdateLikeDislike(parseInt(value.id), "dislike")
+                    }
+                  >
+                    <i
+                      className={`bi ${
+                        data.disLikedPhotos.map((l) => l.id).includes(value.id)
+                          ? "bi bi-hand-thumbs-down-fill"
+                          : "bi-hand-thumbs-down"
+                      } `}
+                    ></i>
+                    <span className="badge bg-danger ms-1">
+                      {value.dislike}
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
           ))}
-        
-        
-       
-        </div>
       </div>
-   
+    </div>
   );
 }
 
