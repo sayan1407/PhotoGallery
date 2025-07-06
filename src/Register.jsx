@@ -3,6 +3,8 @@ import { useRegisterUserMutation } from "./Api/AuthApi";
 import { useNavigate } from "react-router";
 import {ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
+import { Link } from 'react-router';
+
 function Register() {
   const[error,setError] = useState("")
   const[password,setPassword] = useState("")
@@ -84,6 +86,11 @@ function Register() {
             />
             <span className="text-danger">{error}</span>
           </div>
+           <div className="col-sm-6 offset-sm-3 col-xs-12 mt-4">
+              <Link className='nav-link' to='/login'>
+                Already have an account?Login here!!
+              </Link>
+           </div>
         </div>
         <div className="mt-5">
           <button type="submit" className="btn btn-success" disabled={!isValid}>

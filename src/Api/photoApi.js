@@ -28,6 +28,13 @@ export const photoAPI = createApi({
       }) ,
       invalidatesTags : ["Photos"]
     }),
+    removePhoto: builder.mutation({
+      query: (id) => ({
+        url : `PhotoGallery\\${id}`,
+        method : "DELETE",
+      }) ,
+      invalidatesTags : ["Photos"]
+    }),
     updateLikeDislike: builder.mutation({
       query: ({id,userId,type}) => ({
         url : `PhotoGallery\\${id}\\${userId}\\${type}`,
@@ -66,5 +73,6 @@ export const { useGetPhotosQuery,
     useAddPhotosMutation,
  useUpdateLikeDislikeMutation,
  useGetCommentsQuery,
- useAddCommentsMutation
+ useAddCommentsMutation,
+ useRemovePhotoMutation
  } = photoAPI;

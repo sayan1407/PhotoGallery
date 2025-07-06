@@ -37,36 +37,36 @@ function Comments() {
     setComment("")
     }
   return (
-    <div class="container py-5" id="commentsBody">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="comment-box">
-                    <div class="text-center mb-4">
-                        <img src={`images/${location.state.image}`} class="img-thumbnail w-100" alt="" />
+    <div className="container py-5" id="commentsBody">
+        <div className="row justify-content-center">
+            <div className="col-md-8">
+                <div className="comment-box">
+                    <div className="text-center mb-4">
+                        <img src={`images/${location.state.image}`} className="img-thumbnail w-100" alt="" />
                     </div>
 
-                    <div class="mb-4">
-                        <textarea class="form-control" rows="3" placeholder="Write a comment..." onChange={(e) => setComment(e.target.value)}></textarea>
-                        <div class="d-flex justify-content-end mt-2">
-                            <button class="btn btn-primary px-4" onClick={() => handleAddComment(location.state.photoId)}>
-                                <i class="bi bi-chat-left-text me-2"></i>Comment
+                    <div className="mb-4">
+                        <textarea className="form-control" rows="3" placeholder="Write a comment..." onChange={(e) => setComment(e.target.value)}></textarea>
+                        <div className="d-flex justify-content-end mt-2">
+                            <button className="btn btn-primary px-4" onClick={() => handleAddComment(location.state.photoId)}>
+                                <i className="bi bi-chat-left-text me-2"></i>Comment
                             </button>
                         </div>
                     </div>
                     {!isLoading && data.result.map((value,index) => (
-                        <div class="card comment-card mb-3 p-3" key={index}>
-                        <span class="comment-user">{value.user.name}:</span>
-                        <p class="mb-0">{value.comment}</p>
+                        <div className="card comment-card mb-3 p-3" key={index}>
+                        <span className="comment-user">{value.user.name}:</span>
+                        <p className="mb-0">{value.comment}</p>
                     </div>
                     ))}
-                    {/* <div class="card comment-card mb-3 p-3">
-                        <span class="comment-user">User1:</span>
-                        <p class="mb-0">HALA MADRID!!</p>
+                    {/* <div className="card comment-card mb-3 p-3">
+                        <span className="comment-user">User1:</span>
+                        <p className="mb-0">HALA MADRID!!</p>
                     </div>
 
-                    <div class="card comment-card p-3">
-                        <span class="comment-user">User2:</span>
-                        <p class="mb-0">We are the best team in the world!!</p>
+                    <div className="card comment-card p-3">
+                        <span className="comment-user">User2:</span>
+                        <p className="mb-0">We are the best team in the world!!</p>
                     </div> */}
                 </div>
             </div>
